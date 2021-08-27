@@ -1,6 +1,6 @@
 from enum import Enum
 
-from packages.utils.utils import roll_dice
+from packages.game_utils.utils import roll_dice
 
 
 class InitiativeEnum(Enum):
@@ -17,48 +17,32 @@ class Environment:
         self._level = level
 
     @property
-    def room_name(self):
+    def room_name(self) -> str:
         """
-        Name of the room
-
-        :setter: Sets the name of the room
         :return: Name of the room
         :rtype: str
         """
         return self._room_name
 
-    @room_name.setter
-    def room_name(self, value: str):
-        self._room_name = value
-
     @property
-    def description(self):
+    def description(self) -> str:
         """
         Description of the environment to be displayed when a hero enters the environment
 
-        :return: Description of room
-        :setter: Sets the description
+        :return: Description of the environment
         :rtype: str
         """
         return self._desc
 
-    @description.setter
-    def description(self, value: str):
-        self._desc = value
-
     @property
-    def level(self):
+    def level(self) -> int:
         """
-        Sets the difficulty level for the room
-        :return: Difficulty level
-        :setter: Sets the difficulty level
+        Sets the difficulty level for the room. This value will be used to determine how many monsters to spawn.
+
+        :returns: Level of room
         :rtype: int
         """
         return self._level
-
-    @level.setter
-    def level(self, value: int):
-        self._level = value
 
     @staticmethod
     def initiative() -> InitiativeEnum:

@@ -1,3 +1,11 @@
+"""
+This module defines the hero template for the game
+
+Classes
+-------
+    Hero:
+        Hero inherits from the Character base class and defines unique methods for the character
+"""
 from abc import ABC
 from typing import List
 

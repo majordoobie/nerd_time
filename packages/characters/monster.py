@@ -10,7 +10,7 @@ from abc import ABC
 from typing import List
 
 from packages.characters.character_abstract import Character
-from packages.utils.utils import roll_dice
+from packages.game_utils.utils import roll_dice
 
 
 class Monster(Character, ABC):
