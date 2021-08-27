@@ -61,4 +61,3 @@ class Loot:
         self._quantity -= 1
         self._set_quantity()
 
-
