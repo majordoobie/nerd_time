@@ -15,6 +15,7 @@ class Character(ABC):
     MAX_DICE = 1
 
     def __init__(self):
+        self._dice_count = 0
         self._name = ""
         self._dead = False
         self._health = 0
@@ -92,6 +93,27 @@ class Character(ABC):
 
         # inflict damage
         self.health = self.health - damage
+
+    @property
+    @abstractmethod
+    def dice_count(self) -> int:
+        """
+        Return the number of dice the character has for combat
+        :return: Number of dice
+        :rtype: int
+        """
+        pass
+
+    @dice_count.setter
+    @abstractmethod
+    def dice_count(self, value: int) -> None:
+        """
+        Set the number of dice
+        :param value: Number of dice
+        :type value: int
+        :return: None
+        """
+        pass
 
     @abstractmethod
     def combat_roll(self) -> List[int]:
