@@ -1,28 +1,52 @@
-class Loot:
+"""
+Base class for creating loot. Loot that is not a consumable will instantiate this class directly
+"""
 
+
+class Loot:
     def __init__(self, name: str, desc: str, has_item: bool = False, qty: int = 0):
+        """
+        Creates a loot object capable of keeping track of how many of itself are stored in the inventory of the hero
+
+        :param name: Name of loot
+        :type name: str
+        :param desc: Description of the loot
+        :type desc: str
+        :param has_item: Has the item reached a quantity of 0
+        :type has_item: bool
+        :param qty: Amount of item stored in the inventory
+        :type qty: int
+        """
         self._desc = name
         self._name = desc
         self._has_item = has_item
         self._quantity = qty
 
     @property
-    def name(self):
+    def name(self) -> str:
         """
         Return the name of the loot object
+
         :return: Name of loot
         :rtype: str
         """
         return self._name
     
     @property
-    def description(self):
+    def description(self) -> str:
+        """
+        Description of the item to be displayed to the user
+
+        :return: description
+        :rtype: str
+        """
         return self._desc
 
     @property
     def exists(self) -> bool:
         """
         Return whether the item has been completely consumed/decremented
+
         :return: Bool if item exists
         :rtype: bool
         """

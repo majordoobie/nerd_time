@@ -12,6 +12,16 @@ class Environment:
     INITIATIVE_DIE_SIDES = 20
 
     def __init__(self, room_name: str, desc: str, level: int):
+        """
+        Create an environment and summon monsters based on level
+
+        :param room_name: Name of the room
+        :type room_name: str
+        :param desc: Description of the room used to display to the user when they walk in
+        :type desc: str
+        :param level: Level of the room to increase the amount of monsters
+        :type level: int
+        """
         self._room_name = room_name
         self._desc = desc
         self._level = level

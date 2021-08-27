@@ -1,3 +1,7 @@
+"""
+Module handles creating the contract between all consumables by using an abstract class then inheriting from it to
+implement the unique features that each consumable may have.
+"""
 from abc import ABC, abstractmethod
 from math import ceil
 
@@ -26,6 +30,8 @@ class ConsumableLoot(Loot, ABC):
 
 
 class AttackPotion(ConsumableLoot, ABC):
+    """Attack potion increases the amount of combat dice a hero has to roll with for a single term"""
+
     DESC = """Increase the number of attacked dice by 1"""
     NAME = "Attack Potion"
 
@@ -52,6 +58,8 @@ class AttackPotion(ConsumableLoot, ABC):
 
 
 class LuckySeven(ConsumableLoot, ABC):
+    """LuckySeven increases the amount of die faces to achieve greater odds"""
+
     DESC = """Increase the number of faces of the combat die by a factor of 2"""
     NAME = "LuckySeven"
 
@@ -59,13 +67,28 @@ class LuckySeven(ConsumableLoot, ABC):
         super().__init__(LuckySeven.NAME, LuckySeven.DESC)
 
     def consume(self, hero: Hero) -> None:
+        """
+        Multiply die faces by a factor of 2 to increase odds
+
+        :param hero: Hero to affect
+        :return: None
+        """
         hero.die_faces *= 2
 
     def remove_affect(self, hero: Hero) -> None:
+        """
+        Removes the affect
+
+        :param hero: Hero to affect
+        :return: None
+        """
         hero.die_faces /= 2
 
 
 class HealthPotion(ConsumableLoot, ABC):
+    """Increases health of hero by calculating how much health is missing and increasing health by %50 of missing
+    health"""
+
     DESC = """Increase health by 50% of missing health"""
     NAME = "HealthPotion"
 
@@ -89,7 +112,9 @@ class HealthPotion(ConsumableLoot, ABC):
 
 
 class HeavyHand(ConsumableLoot, ABC):
-    DESC = """Increase the amount of damage dealth by 1"""
+    """Increases the base damage by a factor of 1"""
+
+    DESC = """Increase the amount of damage dealt by 1"""
     NAME = "HeavyHand"
 
     def __init__(self):
@@ -114,6 +139,8 @@ class HeavyHand(ConsumableLoot, ABC):
 
 
 class PierceShot(ConsumableLoot, ABC):
+    """Guarantees a successful hit/block"""
+
     DESC = """Guarantee success in combat"""
     NAME = "PierceShot"
 
@@ -121,6 +148,12 @@ class PierceShot(ConsumableLoot, ABC):
         super().__init__(PierceShot.NAME, PierceShot.DESC)
 
     def consume(self, hero: Hero) -> None:
+        """
+        Enables the hero buff
+
+        :param hero: Hero to affect
+        :return: None
+        """
         hero.pierce_shot = True
 
     def remove_affect(self, hero: Hero) -> None:
