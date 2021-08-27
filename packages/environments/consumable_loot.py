@@ -118,11 +118,20 @@ class PierceShot(ConsumableLoot, ABC):
     NAME = "PierceShot"
 
     def __init__(self):
-        super().__init__(AttackPotion.NAME, AttackPotion.DESC)
+        super().__init__(PierceShot.NAME, PierceShot.DESC)
 
     def consume(self, hero: Hero) -> None:
-        pass
+        hero.pierce_shot = True
 
     def remove_affect(self, hero: Hero) -> None:
-        pass
+        hero.pierce_shot = False
 
+
+if __name__ != '__main__':
+    CONSUMABLE_LOOT = (
+        AttackPotion,
+        LuckySeven,
+        HealthPotion,
+        HeavyHand,
+        PierceShot
+    )
