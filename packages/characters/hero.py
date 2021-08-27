@@ -20,6 +20,7 @@ class Hero(Character, ABC):
 
     def __init__(self, username: str):
         super().__init__()
+        self._lucky_seven = False
         self._name = username
         self._health = Hero.DEFAULT_HEALTH
         self._dice_count = Hero.DEFAULT_DIE_COUNT
@@ -28,6 +29,28 @@ class Hero(Character, ABC):
 
     def combat_roll(self) -> List[int]:
         pass
+
+    @property
+    def lucky_seven(self) -> bool:
+        """
+        Lucky Seven is a buff that can be activated in a hero using a LuckySeven potion. This will guarantee that the
+        combat dice return all max values
+
+        :return: Bool indicating if buff is enabled
+        :rtype: bool
+        """
+        return self._lucky_seven
+
+    @lucky_seven.setter
+    def lucky_seven(self, value: bool) -> None:
+        """
+        Set the Lucky Seven buff
+
+        :param value: Bool indicating if buff is in affect
+        :return: LuckySeven bool
+        """
+        self._lucky_seven = value
+
 
     @property
     def damage(self) -> int:
