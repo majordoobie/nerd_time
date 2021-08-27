@@ -17,9 +17,11 @@ class Hero(Character, ABC):
     DEFAULT_DIE_COUNT = 3
     DEFAULT_DIE_SIDES = 6
     DEFAULT_DAMAGE = 1
+    DEFAULT_PIERCE_SHOT = False
 
     def __init__(self, username: str):
         super().__init__()
+        self._pierce_shot = Hero.DEFAULT_PIERCE_SHOT
         self._name = username
         self._health = Hero.DEFAULT_HEALTH
         self._dice_count = Hero.DEFAULT_DIE_COUNT
@@ -28,6 +30,28 @@ class Hero(Character, ABC):
 
     def combat_roll(self) -> List[int]:
         pass
+
+    @property
+    def pierce_shot(self) -> bool:
+        """
+        Lucky Seven is a buff that can be activated in a hero using a LuckySeven potion. This will guarantee that the
+        combat dice return all max values
+
+        :return: Bool indicating if buff is enabled
+        :rtype: bool
+        """
+        return self._pierce_shot
+
+    @pierce_shot.setter
+    def pierce_shot(self, value: bool) -> None:
+        """
+        Set the Lucky Seven buff
+
+        :param value: Bool indicating if buff is in affect
+        :return: LuckySeven bool
+        """
+        self._pierce_shot = value
+
 
     @property
     def damage(self) -> int:
