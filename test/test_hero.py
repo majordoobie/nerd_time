@@ -26,6 +26,12 @@ class TestHero(unittest.TestCase):
         self.hero.dice_count += 1
         self.assertEqual(self.hero.dice_count, 4)
 
+    def test_damage_dealt(self):
+        """Test the damage mechanism for items"""
+        self.assertEqual(self.hero.damage, 1)
+        self.hero.damage += 1
+        self.assertEqual(self.hero.damage, 2)
+
 
 
 

@@ -8,6 +8,7 @@ class Hero(Character, ABC):
     DEFAULT_HEALTH = 10
     DEFAULT_DIE_COUNT = 3
     DEFAULT_DIE_SIDES = 6
+    DEFAULT_DAMAGE = 1
 
     def __init__(self, username: str):
         super().__init__()
@@ -15,9 +16,29 @@ class Hero(Character, ABC):
         self._health = Hero.DEFAULT_HEALTH
         self._dice_count = Hero.DEFAULT_DIE_COUNT
         self._die_faces = Hero.DEFAULT_DIE_SIDES
+        self._damage = Hero.DEFAULT_DAMAGE
 
     def combat_roll(self) -> List[int]:
         pass
+
+    @property
+    def damage(self) -> int:
+        """
+        Returns the amount of damage that is dealt when a successful attack is landed
+        :return: Damage value
+        :rtype: int
+        """
+        return self._damage
+
+    @damage.setter
+    def damage(self, value: int) -> None:
+        """
+        Sets the damage dealt by the hero
+        :param value: Damage value to set
+        :type value: int
+        :return: None
+        """
+        self._damage = value
 
     @property
     def die_faces(self) -> int:
