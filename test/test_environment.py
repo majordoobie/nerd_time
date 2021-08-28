@@ -5,7 +5,7 @@ from packages.environments.environment import Environment, InitiativeEnum
 
 class TestEnvironment(unittest.TestCase):
     def setUp(self) -> None:
-        self.spooky = Environment("Spooky Place", "Very Spooky Place", 1)
+        self.spooky = Environment("Spooky Place", "Very Spooky Place", 1, None)
 
     def test_env_init(self):
         """Test to make sure we can init the class"""

@@ -7,18 +7,28 @@ Classes
         Monster inherits functionality from the Character class and adds its own unique functions
 """
 from abc import ABC
-from typing import List
+from typing import List, Optional
 
 from packages.characters.character_abstract import Character
 from packages.game_utils.utils import roll_dice
 
 
 class Monster(Character, ABC):
-    def __init__(self, name: str, health: int, dice_count: int):
+    def __init__(self, name: str, health: int, dice_count: int, noise: str = None):
         super().__init__()
         self._name = name
         self._health = health
         self._dice_count = dice_count
+        self._noise = noise
+
+    @property
+    def noise(self) -> Optional[str]:
+        """
+        Returns the monster noise if available
+        :return: Monster noise string
+        :rtype: Optional[str]
+        """
+        return self._noise
 
     @property
     def dice_count(self) -> int:

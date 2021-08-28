@@ -1,6 +1,9 @@
+from collections import namedtuple
 from enum import Enum
+from typing import List, Optional
 
 from packages.game_utils.utils import roll_dice
+from packages.game_utils.monster_controller import MonsterController, EnvironmentRecord
 
 
 class InitiativeEnum(Enum):
@@ -11,7 +14,7 @@ class InitiativeEnum(Enum):
 class Environment:
     INITIATIVE_DIE_SIDES = 20
 
-    def __init__(self, room_name: str, desc: str, level: int):
+    def __init__(self, room_name: str, desc: str, level: int, habitable: List[str] = None):
         """
         Create an environment and summon monsters based on level
 
@@ -25,6 +28,28 @@ class Environment:
         self._room_name = room_name
         self._desc = desc
         self._level = level
+        self._habitable = habitable
+        self._monsters = MonsterController(EnvironmentRecord(self.level, self.habitable))
+
+    @property
+    def monsters(self) -> MonsterController:
+        """
+        Returns the MonsterController instance
+        :return: Monster controller
+        :rtype: MonsterController
+        """
+        return self._monsters
+
+
+    @property
+    def habitable(self) -> Optional[List[str]]:
+        """
+        Return the list of habitable monsters of this environment. If none is given, then any monsters will spawn
+
+        :return: List of monsters that exist in the environment
+        :rtype: Optional[List[str]]
+        """
+        return self._habitable
 
     @property
     def room_name(self) -> str:
