@@ -6,6 +6,7 @@ from packages.game_utils.game_controller import DungeonDudes
 
 ASCII_PATH = "data/.dd_ascii"
 
+
 def _get_username() -> str:
     """Fetch the users username"""
     print("Enter your desired username for the game:")
@@ -34,6 +35,3 @@ if __name__ == "__main__":
         main(dice=False)
     else:
         main(dice=True)
-
-
-

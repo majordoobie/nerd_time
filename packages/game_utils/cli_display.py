@@ -8,7 +8,6 @@ from typing import List
 
 from packages.characters.hero import Hero
 from packages.characters.monster import Monster
-from packages.environments.consumable_loot import ConsumableLoot
 from packages.environments.environment import Environment
 from packages.environments.loot import Loot
 

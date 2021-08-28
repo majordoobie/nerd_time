@@ -1,3 +1,6 @@
+"""
+Module handles combat between Character generics
+"""
 from typing import List
 
 from packages.characters.character_abstract import Character
