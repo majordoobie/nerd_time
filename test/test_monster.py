@@ -14,8 +14,8 @@ class TestMonster(unittest.TestCase):
 
     def test_monster_combat_dice(self):
         """Test the creation of a monster that the dice count returned"""
-        combat_rolls = self.imp.combat_roll()
-        self.assertEqual(len(combat_rolls), self.imp.dice_count)
+        self.imp.combat_roll()
+        self.assertEqual(len(self.imp.combat_rolls), self.imp.dice_count)
 
     def test_read_only(self):
         """Make sure that data is protected"""

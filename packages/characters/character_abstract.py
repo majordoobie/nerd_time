@@ -13,12 +13,15 @@ from typing import List
 class Character(ABC):
     MIN_DICE = 3
     MAX_DICE = 1
+    DEFAULT_DAMAGE = 1
 
     def __init__(self):
+        self._combat_rolls = []
         self._dice_count = 0
         self._name = ""
         self._dead = False
         self._health = 0
+        self._damage = Character.DEFAULT_DAMAGE
 
     def __str__(self):
         return f"{self.__class__.__name__}: {self.name}"
@@ -116,10 +119,36 @@ class Character(ABC):
         pass
 
     @abstractmethod
-    def combat_roll(self) -> List[int]:
+    def combat_roll(self):
         """
-        Combat roll should return a list of dice rolled for combat
-        :return: List of int rolls
-        :rtype: List[int]
+        Set the combat rolls for determining if successful attack or defense
+
+        :return: None
         """
         pass
+
+    @property
+    def combat_rolls(self) -> List[int]:
+        return self._combat_rolls
+
+    @property
+    def damage(self) -> int:
+        """
+        Returns the amount of damage that is dealt when a successful attack is landed
+
+        :return: Damage value
+        :rtype: int
+        """
+        return self._damage
+
+    @damage.setter
+    def damage(self, value: int) -> None:
+        """
+        Sets the damage dealt by the character
+        :param value: Damage value to set
+        :type value: int
+        :return: None
+        """
+        self._damage = value
+
+

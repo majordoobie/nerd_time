@@ -46,11 +46,11 @@ class Monster(Character, ABC):
 
         self._dice_count = value
 
-    def combat_roll(self) -> List[int]:
+    def combat_roll(self) -> None:
         """
         Return the combat rolls for attacking based on the amount of dice the monster has
-        :return: List of rolls in descending order
-        :rtype: List[int]
+
+        :return: None
         """
         rolls = []
         for dice in range(0, self.dice_count):
@@ -58,5 +58,7 @@ class Monster(Character, ABC):
 
         # sort in descending order
         rolls.sort(reverse=True)
-        return rolls
+
+        # set the rolls
+        self._combat_rolls = rolls
 

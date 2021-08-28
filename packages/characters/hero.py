@@ -10,13 +10,13 @@ from abc import ABC
 from typing import List
 
 from packages.characters.character_abstract import Character
+from packages.game_utils.utils import roll_dice
 
 
 class Hero(Character, ABC):
     DEFAULT_HEALTH = 10
     DEFAULT_DIE_COUNT = 3
     DEFAULT_DIE_SIDES = 6
-    DEFAULT_DAMAGE = 1
     DEFAULT_PIERCE_SHOT = False
 
     def __init__(self, username: str):
@@ -26,10 +26,28 @@ class Hero(Character, ABC):
         self._health = Hero.DEFAULT_HEALTH
         self._dice_count = Hero.DEFAULT_DIE_COUNT
         self._die_faces = Hero.DEFAULT_DIE_SIDES
-        self._damage = Hero.DEFAULT_DAMAGE
 
-    def combat_roll(self) -> List[int]:
-        pass
+    def combat_roll(self):
+        """
+        Return the combat rolls for attacking based on the amount of dice the monster has
+
+        :return: None
+        """
+        rolls = []
+
+        # check if pierce shot is activated, if it is, then rull all maxes
+        if self.pierce_shot:
+            for dice in range(0, self.dice_count):
+                rolls.append(self.die_faces)
+
+        else:
+            for dice in range(0, self.dice_count):
+                rolls.append(roll_dice(self.die_faces))
+            # sort in descending order
+            rolls.sort(reverse=True)
+
+        # set the rolls
+        self._combat_rolls = rolls
 
     @property
     def pierce_shot(self) -> bool:
