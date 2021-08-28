@@ -50,17 +50,23 @@ class DungeonDudes:
         decision = 0
         if self._initial:
             while decision != 1:
-                display_no_combat_init(self.hero)
-                decision = get_user_input([1, 2, -1])
-                if decision == -1:
-                    self._quit()
-                elif decision == 2:
-                    self._show_bag()
-                else:
-                    break
+                try:
+                    display_no_combat_init(self.hero)
+                    decision = get_user_input([1, 2, -1])
+                    if decision == -1:
+                        self._quit()
+                    elif decision == 2:
+                        self._show_bag()
+                    else:
+                        break
+                except KeyboardInterrupt:
+                    print("[!] If you want to quit, use the provided user interface")
 
         while not self.hero.is_dead:
-            self._load_map()
+            try:
+                self._load_map()
+            except KeyboardInterrupt:
+                print("[!] If you want to quit, use the provided user interface")
 
     def _quit(self) -> None:
         """
@@ -97,6 +103,7 @@ class DungeonDudes:
             else:
                 if random() < self.hero.health * .1:
                     print("[+] Successfully ran away!")
+                    return
                 else:
                     print("[!] Bummer, you just loss two dice rolls for your next round.")
                     self.hero.dice_count -= 2
@@ -133,6 +140,8 @@ class DungeonDudes:
             if environment.initiative.value == 0:
                 duel(self.hero, monster, environment, self._show_dice)
                 environment.monster_ctrl.clean_up()
+                if monster.is_dead:
+                    continue
                 duel(monster, self.hero, environment, self._show_dice)
                 if self.hero.is_dead:
                     self._quit()

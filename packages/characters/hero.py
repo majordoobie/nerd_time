@@ -7,7 +7,6 @@ Classes
         Hero inherits from the Character base class and defines unique methods for the character
 """
 from abc import ABC
-from typing import List
 
 from packages.characters.character_abstract import Character
 from packages.environments.loot import Loot

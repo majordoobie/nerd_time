@@ -1,6 +1,7 @@
-from collections import namedtuple
+"""
+Module is responsible for the environment from spawning monsters to displaying the environment description
+"""
 from enum import Enum
-from textwrap import wrap
 from typing import List, Optional
 
 from packages.game_utils.utils import roll_dice

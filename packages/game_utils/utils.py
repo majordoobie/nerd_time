@@ -1,3 +1,5 @@
+"""Helper functions that do not fit anywhere better than here"""
+
 from collections import namedtuple
 from random import randint
 from typing import List
@@ -6,6 +8,7 @@ JunkLoot = namedtuple("JunkLoot", "name, desc")
 
 
 def get_junk_loot():
+    """None consumable loot items a monster may drop"""
     return (
         JunkLoot("Bones", "Brittle bones, eeek!"),
         JunkLoot("Torn Leaves", "How this get in my bag?"),
