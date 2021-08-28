@@ -105,7 +105,6 @@ def _habitable_monsters(environment: EnvironmentRecord) -> List[MonsterRecords]:
             reader = csv.reader(infile)
             try:
                 for creature in map(MonsterRecords._make, reader):
-                    print(creature.noise)
                     monster_repo.append(creature)
             except TypeError:
                 print(f"Invalid read line detected in {monster_path.name}. Skipping line...")
