@@ -1,6 +1,11 @@
+from collections import namedtuple
 from enum import Enum
+from textwrap import wrap
+from typing import List, Optional
 
 from packages.game_utils.utils import roll_dice
+from packages.game_utils.monster_controller import MonsterController, EnvironmentRecord
+from packages.environments.loot import Loot
 
 
 class InitiativeEnum(Enum):
@@ -11,7 +16,7 @@ class InitiativeEnum(Enum):
 class Environment:
     INITIATIVE_DIE_SIDES = 20
 
-    def __init__(self, room_name: str, desc: str, level: int):
+    def __init__(self, room_name: str, desc: str, habitable: List[str] = None, level: int = 1):
         """
         Create an environment and summon monsters based on level
 
@@ -22,9 +27,62 @@ class Environment:
         :param level: Level of the room to increase the amount of monsters
         :type level: int
         """
+        self._loot_list = []
+        self._initiative = self._initiative()
         self._room_name = room_name
         self._desc = desc
         self._level = level
+        self._habitable = habitable
+        self._monsters = MonsterController(EnvironmentRecord(self.level, self.habitable))
+        self.round = 1
+
+    @property
+    def loot(self) -> List[Loot]:
+        """Returns the list of loot available"""
+        return self._loot_list
+
+    @property
+    def has_loot(self) -> bool:
+        return len(self.loot) > 0
+
+    def add_loot(self, loot: Loot) -> None:
+        """
+        Adds loot to the environment
+
+        :param loot: Loot dropped by a monster
+        :return: None
+        """
+        self._loot_list.append(loot)
+
+    def loot_room(self) -> List[Loot]:
+        """
+        Loots the environment by dumping the list of loot
+
+        :return: Copy of the loot list
+        :rtype: List[Loot]
+        """
+        temp = self._loot_list[:]
+        self._loot_list = []
+        return temp
+
+    @property
+    def monster_ctrl(self) -> MonsterController:
+        """
+        Returns the MonsterController instance
+        :return: Monster controller
+        :rtype: MonsterController
+        """
+        return self._monsters
+
+    @property
+    def habitable(self) -> Optional[List[str]]:
+        """
+        Return the list of habitable monsters of this environment. If none is given, then any monsters will spawn
+
+        :return: List of monsters that exist in the environment
+        :rtype: Optional[List[str]]
+        """
+        return self._habitable
 
     @property
     def room_name(self) -> str:
@@ -54,8 +112,11 @@ class Environment:
         """
         return self._level
 
-    @staticmethod
-    def initiative() -> InitiativeEnum:
+    @property
+    def initiative(self) -> InitiativeEnum:
+        return self._initiative
+
+    def _initiative(self) -> InitiativeEnum:
         """
         Determines the combat initiative
 

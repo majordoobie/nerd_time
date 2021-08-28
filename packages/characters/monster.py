@@ -7,18 +7,32 @@ Classes
         Monster inherits functionality from the Character class and adds its own unique functions
 """
 from abc import ABC
-from typing import List
+from random import random, randint, choice
+from typing import List, Optional
 
 from packages.characters.character_abstract import Character
-from packages.game_utils.utils import roll_dice
+from packages.environments.consumable_loot import CONSUMABLE_LOOT
+from packages.environments.loot import Loot
+from packages.game_utils.utils import roll_dice, get_junk_loot
 
 
 class Monster(Character, ABC):
-    def __init__(self, name: str, health: int, dice_count: int):
+    def __init__(self, name: str, health: int, dice_count: int, noise: str = None):
         super().__init__()
         self._name = name
         self._health = health
         self._dice_count = dice_count
+        self._noise = noise
+        self._generate_loot()
+
+    @property
+    def noise(self) -> Optional[str]:
+        """
+        Returns the monster noise if available
+        :return: Monster noise string
+        :rtype: Optional[str]
+        """
+        return self._noise
 
     @property
     def dice_count(self) -> int:
@@ -46,11 +60,11 @@ class Monster(Character, ABC):
 
         self._dice_count = value
 
-    def combat_roll(self) -> List[int]:
+    def combat_roll(self) -> None:
         """
         Return the combat rolls for attacking based on the amount of dice the monster has
-        :return: List of rolls in descending order
-        :rtype: List[int]
+
+        :return: None
         """
         rolls = []
         for dice in range(0, self.dice_count):
@@ -58,5 +72,39 @@ class Monster(Character, ABC):
 
         # sort in descending order
         rolls.sort(reverse=True)
-        return rolls
+
+        # set the rolls
+        self._combat_rolls = rolls
+
+    def set_loot(self, value: Loot) -> None:
+        """Add loot to inventory regardless of duplication"""
+        self._loot.append(value)
+
+    def _generate_loot(self):
+        # check if the chance is height enough to loot
+        modifier = (self.health + self.dice_count) * .1
+        modifier = 1
+
+        if not random() < modifier:
+            return
+
+        junk_loot = get_junk_loot()
+        consumable_loot = CONSUMABLE_LOOT
+
+        count = randint(0, 3)
+        for _ in range(0, count):
+            loot = choice(junk_loot)
+            self.set_loot(
+                Loot(
+                    name=loot.name,
+                    desc=loot.desc,
+                    qty=randint(2, 20)
+                )
+            )
+
+        # chance it again to see if good loot is dropped
+        count = randint(0, 3)
+        for _ in range(0, count):
+            self.set_loot(choice(consumable_loot))
+
 

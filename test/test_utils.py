@@ -1,5 +1,6 @@
 import unittest
 from packages.game_utils import utils
+from packages.game_utils.utils import get_user_input
 
 
 class TestUtils(unittest.TestCase):

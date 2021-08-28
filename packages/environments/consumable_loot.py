@@ -10,6 +10,9 @@ from packages.characters.hero import Hero
 
 
 class ConsumableLoot(Loot, ABC):
+    def __init__(self, name, desc):
+        super().__init__(name, desc)
+
     @abstractmethod
     def consume(self, hero: Hero) -> None:
         """
@@ -162,9 +165,9 @@ class PierceShot(ConsumableLoot, ABC):
 
 if __name__ != '__main__':
     CONSUMABLE_LOOT = (
-        AttackPotion,
-        LuckySeven,
-        HealthPotion,
-        HeavyHand,
-        PierceShot
+        AttackPotion(),
+        LuckySeven(),
+        HealthPotion(),
+        HeavyHand(),
+        PierceShot()
     )
