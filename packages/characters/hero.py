@@ -10,6 +10,7 @@ from abc import ABC
 from typing import List
 
 from packages.characters.character_abstract import Character
+from packages.environments.loot import Loot
 from packages.game_utils.utils import roll_dice
 
 
@@ -26,6 +27,7 @@ class Hero(Character, ABC):
         self._health = Hero.DEFAULT_HEALTH
         self._dice_count = Hero.DEFAULT_DIE_COUNT
         self._die_faces = Hero.DEFAULT_DIE_SIDES
+        self._buffs = []
 
     def combat_roll(self):
         """
@@ -69,7 +71,6 @@ class Hero(Character, ABC):
         :return: LuckySeven bool
         """
         self._pierce_shot = value
-
 
     @property
     def damage(self) -> int:
@@ -135,3 +136,40 @@ class Hero(Character, ABC):
             raise ValueError("Dice count must at least be 1")
 
         self._dice_count = value
+
+    def consume_loot(self, loot):
+        loot.consume(self)
+        self._buffs.append(loot)
+        loot.decrement_qty()
+
+        # Pop the item if there is no more of it
+        if loot.quantity < 1:
+            self.loot.pop(self.loot.index(loot))
+
+    def clear_buffs(self):
+        for buff in self._buffs:
+            buff.remove_affect(self)
+
+    def set_loot(self, value: Loot) -> None:
+        """
+        Add loot to hero inventory
+
+        :param value: Loot to add
+        :type value: Loot
+        :return: None
+        """
+        match = False
+        for loot in self.loot:
+            if loot == value:
+                loot.add_qty(value.quantity)
+                match = True
+                break
+
+        if not match:
+            self._loot.append(value)
+
+        def _key(item: Loot):
+            return item.quantity
+
+        # order list before leaving
+        self._loot.sort(key=_key, reverse=True)

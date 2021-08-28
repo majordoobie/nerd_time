@@ -1,0 +1,29 @@
+{
+  "environments": [
+    {
+      "name": "Cave",
+      "desc": "You proceed into a dark and gloomy cave riddled with rats and insects. They scurry back to their hovels as your torch light lines the cavern walls. Symbols appear along the walls as you delve further into the darkness. You turn a corner, your light glistens on what appears to be a large cache of treasure. You move closer to inspect when you are suddenly interrupted by {noise}",
+      "habitable": ["Troll", "Ogre", "Golem", "Hag"]
+    },
+    {
+      "name": "Forest",
+      "desc": "Through the thick brush and trees, you see a large alabaster statue of a woman draped in loose fitting robes and an alter lined with candles. It appears to have been here for eons, yet the candles are lit and upon the alter you see the bloody carcass of what appears to be a large rodent, wrapped in cloth. You carefully creep forward to investigate when you notice the small swaddle of cloth looks to be more human than beast. In horror you turn away from the gruesome sight and are startled by {noise}",
+      "habitable": ["Witch", "Hag", "Harpy"]
+    },
+    {
+      "name": "Lake",
+      "desc": "After a long and arduous journey, you come to a vast mountain lake. The water is beautiful and calm, glistening with the last remnants of sunlight. You drink and wash the days journey off in the cool refreshing water. As the sun falls gently over the mountains you notice quiet ripples in the water. As you lean in to get a closer look {noise}",
+      "habitable": ["Water Serpent", "Sea Hag", "Giant Crab"]
+    },
+    {
+      "name": "Dungeon",
+      "desc": "You approach two giant stone doors, decorated with carvings of men and beasts frozen in ferocious battle for all of time. The doors scratch and crumble as you push them open to enter the dungeon. You walk through the dank corridors, weapon in hand ready for what may be lurking in the shadows. You pass empty room after empty room full of artifacts from a time long forgotten. You walk down a long hallway and enter a large chamber at the end of the dungeon. As your torchlight fills the room you see stone pillars strewn with webs and a guilded throne watching over a massive table meant for a kings feast. Suddenly {noise}",
+      "habitable": ["Skeletons", "Goblins", "Giant Spiders", "Zombies"]
+    },
+    {
+      "name": "Mountain Pass",
+      "desc": "You find yourself in a frozen wasteland atop a vast mountain range. The snow beats against your face like shards of glass. The snow crunches beneath your feet as you struggle to find your way desperately trying to hold your footing lest you tumble to your doom. The cold bites you to the bone and just as you are about to search for shelter from the storm you spot the shrine in the distance that you traveled so long and hard to reach. As you make one final push to reach the shrine {noise}",
+      "habitable": ["Yeti", "Snow Leopard", "Arctic Wolf", "Orc"]
+    }
+  ]
+}

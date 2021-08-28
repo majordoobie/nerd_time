@@ -67,7 +67,7 @@ class MonsterController:
         # Pop the dead
         for index, creature in reversed(list(enumerate(self._monsters))):
             if creature.is_dead:
-                self._monsters.pop(index)
+                monster = self._monsters.pop(index)
                 self._monster_count -= 1
 
     def _spawn_monsters(self):
@@ -77,7 +77,7 @@ class MonsterController:
         for spawn in range(0, self.monster_count):
             monster = choice(self._habitable_monsters)
             self._monsters.append(
-                Monster(monster.name, monster.health, monster.dice_count, monster.noise)
+                Monster(monster.name, int(monster.health), int(monster.dice_count), monster.noise)
             )
 
         def _key(item: Monster):

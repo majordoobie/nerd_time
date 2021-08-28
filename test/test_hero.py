@@ -32,8 +32,5 @@ class TestHero(unittest.TestCase):
         self.hero.damage += 1
         self.assertEqual(self.hero.damage, 2)
 
-
-
-
 if __name__ == '__main__':
     unittest.main()

@@ -9,6 +9,8 @@ Classes
 from abc import ABC, abstractmethod
 from typing import List
 
+from packages.environments.loot import Loot
+
 
 class Character(ABC):
     MIN_DICE = 3
@@ -16,6 +18,7 @@ class Character(ABC):
     DEFAULT_DAMAGE = 1
 
     def __init__(self):
+        self._loot = []
         self._combat_rolls = []
         self._dice_count = 0
         self._name = ""
@@ -151,4 +154,18 @@ class Character(ABC):
         """
         self._damage = value
 
+    @abstractmethod
+    def set_loot(self, value: Loot) -> None:
+        pass
 
+    @property
+    def loot(self) -> List[Loot]:
+        return self._loot
+
+    @property
+    def loot_count(self) -> int:
+        return len(self._loot)
+
+    @property
+    def has_loot(self) -> bool:
+        return len(self._loot) > 0

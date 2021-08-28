@@ -4,7 +4,7 @@ Base class for creating loot. Loot that is not a consumable will instantiate thi
 
 
 class Loot:
-    def __init__(self, name: str, desc: str, has_item: bool = False, qty: int = 0):
+    def __init__(self, name: str, desc: str, has_item: bool = False, qty: int = 1):
         """
         Creates a loot object capable of keeping track of how many of itself are stored in the inventory of the hero
 
@@ -17,10 +17,17 @@ class Loot:
         :param qty: Amount of item stored in the inventory
         :type qty: int
         """
-        self._desc = name
-        self._name = desc
+        self._desc = desc
+        self._name = name
         self._has_item = has_item
         self._quantity = qty
+        self._set_quantity()
+
+    def __eq__(self, other):
+        """Compare loot types"""
+        if isinstance(other, Loot):
+            return self.name == other.name
+        return False
 
     @property
     def name(self) -> str:
@@ -63,13 +70,13 @@ class Loot:
         elif (self._quantity < 1) and (self._has_item is True):
             self._has_item = False
 
-    def add_qty(self) -> None:
+    def add_qty(self, quantity: int = 1) -> None:
         """
         Public function to increment the amount of "this" loot
 
         :return: None
         """
-        self._quantity += 1
+        self._quantity += quantity
         self._set_quantity()
 
     def decrement_qty(self) -> None:
@@ -84,4 +91,8 @@ class Loot:
 
         self._quantity -= 1
         self._set_quantity()
+
+    @property
+    def quantity(self) -> int:
+        return self._quantity
 

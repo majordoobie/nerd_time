@@ -6,8 +6,8 @@ from packages.environments.environment import Environment
 
 class TestMonsterController(TestCase):
     def setUp(self) -> None:
-        self.env1 = Environment("Cave", "Scary", 1, ["Imp", "Mad Cow"])
-        self.env2 = Environment("Cave", "Scary", 5)
+        self.env1 = Environment("Cave", "Scary", ["Imp", "Mad Cow"], 1)
+        self.env2 = Environment("Cave", "Scary", level=5)
 
     def test_monster_one_count(self):
         """Test creating of 1 monster"""

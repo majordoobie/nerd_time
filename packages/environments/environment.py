@@ -1,5 +1,6 @@
 from collections import namedtuple
 from enum import Enum
+from textwrap import wrap
 from typing import List, Optional
 
 from packages.game_utils.utils import roll_dice
@@ -15,7 +16,7 @@ class InitiativeEnum(Enum):
 class Environment:
     INITIATIVE_DIE_SIDES = 20
 
-    def __init__(self, room_name: str, desc: str, level: int, habitable: List[str] = None):
+    def __init__(self, room_name: str, desc: str, habitable: List[str] = None, level: int = 1):
         """
         Create an environment and summon monsters based on level
 
@@ -33,11 +34,16 @@ class Environment:
         self._level = level
         self._habitable = habitable
         self._monsters = MonsterController(EnvironmentRecord(self.level, self.habitable))
+        self.round = 1
 
     @property
     def loot(self) -> List[Loot]:
         """Returns the list of loot available"""
         return self._loot_list
+
+    @property
+    def has_loot(self) -> bool:
+        return len(self.loot) > 0
 
     def add_loot(self, loot: Loot) -> None:
         """
@@ -60,7 +66,7 @@ class Environment:
         return temp
 
     @property
-    def monsters(self) -> MonsterController:
+    def monster_ctrl(self) -> MonsterController:
         """
         Returns the MonsterController instance
         :return: Monster controller
@@ -110,8 +116,7 @@ class Environment:
     def initiative(self) -> InitiativeEnum:
         return self._initiative
 
-    @staticmethod
-    def _initiative() -> InitiativeEnum:
+    def _initiative(self) -> InitiativeEnum:
         """
         Determines the combat initiative
 

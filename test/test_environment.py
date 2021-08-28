@@ -6,7 +6,7 @@ from packages.environments.consumable_loot import LuckySeven, AttackPotion
 
 class TestEnvironment(unittest.TestCase):
     def setUp(self) -> None:
-        self.spooky = Environment("Spooky Place", "Very Spooky Place", 1, None)
+        self.spooky = Environment("Spooky Place", "Very Spooky Place", None, 1)
         self.attack_potion = AttackPotion()
         self.lucky_seven = LuckySeven()
 
@@ -28,10 +28,6 @@ class TestEnvironment(unittest.TestCase):
         self.assertEqual(len(self.spooky.loot), 2)
         self.spooky.loot_room()
         self.assertEqual(len(self.spooky.loot), 0)
-
-
-
-
 
 
 if __name__ == '__main__':

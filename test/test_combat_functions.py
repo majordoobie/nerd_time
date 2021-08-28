@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from packages.characters.hero import Hero
 from packages.characters.monster import Monster
+from packages.environments.environment import Environment
 from packages.game_utils.combat_functions import duel
 from packages.environments.consumable_loot import HeavyHand, PierceShot
 
@@ -9,6 +10,7 @@ from packages.environments.consumable_loot import HeavyHand, PierceShot
 class TestDuel(TestCase):
     def setUp(self) -> None:
         self.hero = Hero("Samurai Jack")
+        self.spooky = Environment("Spooky Place", "Very Spooky Place", None, 1)
         self.monster = Monster("Imp", 3, 1)
         self.heavy_hand = HeavyHand()
         self.pierce_shot = PierceShot()
@@ -19,8 +21,10 @@ class TestDuel(TestCase):
         self.monster._combat_rolls = [3]
 
         self.assertEqual(self.monster.health, 3)
-        self.assertTrue(duel(self.hero, self.monster, debug=True))
+        self.assertTrue(duel(self.hero, self.monster, self.spooky, debug=True))
         self.assertEqual(self.monster.health, 2)
+
+        self.heavy_hand.add_qty(3)
 
     def test_with_potions(self):
         """Test that multiple potions still result in expected damage to monster"""
@@ -38,7 +42,7 @@ class TestDuel(TestCase):
         self.monster._combat_rolls = [3]
 
         self.assertEqual(self.monster.health, 3)
-        self.assertTrue(duel(self.hero, self.monster, debug=True))
+        self.assertTrue(duel(self.hero, self.monster, self.spooky, debug=True))
         self.assertEqual(self.monster.health, 1)
 
     def test_fail_attack(self):
@@ -47,7 +51,7 @@ class TestDuel(TestCase):
         self.monster._combat_rolls = [6]
 
         self.assertEqual(self.monster.health, 3)
-        self.assertFalse(duel(self.hero, self.monster, debug=True))
+        self.assertFalse(duel(self.hero, self.monster, self.spooky, debug=True))
         self.assertEqual(self.monster.health, 3)
 
 
