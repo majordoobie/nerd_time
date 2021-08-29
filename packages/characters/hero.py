@@ -136,6 +136,12 @@ class Hero(Character, ABC):
 
         self._dice_count = value
 
+    def cleanup_bag(self):
+        self._sort_loot()
+        for index, loot in reversed(list(enumerate(self.loot))):
+            if loot.quantity == 0:
+                self.loot.pop(index)
+
     def consume_loot(self, loot):
         loot.consume(self)
         self._buffs.append(loot)
@@ -146,7 +152,8 @@ class Hero(Character, ABC):
             self.loot.pop(self.loot.index(loot))
 
     def clear_buffs(self):
-        for buff in self._buffs:
+        while len(self._buffs) > 0:
+            buff = self._buffs.pop()
             buff.remove_affect(self)
 
     def set_loot(self, value: Loot) -> None:
@@ -167,6 +174,10 @@ class Hero(Character, ABC):
         if not match:
             self._loot.append(value)
 
+        self._sort_loot()
+
+    def _sort_loot(self):
+        """Sort loot putting the least amount at the end"""
         def _key(item: Loot):
             return item.quantity
 

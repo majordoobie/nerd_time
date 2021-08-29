@@ -105,6 +105,6 @@ class Monster(Character, ABC):
         # chance it again to see if good loot is dropped
         count = randint(0, 3)
         for _ in range(0, count):
-            self.set_loot(choice(consumable_loot))
+            self.set_loot(choice(consumable_loot)())
 
 

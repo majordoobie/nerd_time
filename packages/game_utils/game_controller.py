@@ -49,6 +49,7 @@ class DungeonDudes:
         """
         decision = 0
         if self._initial:
+            self._initial = False
             while decision != 1:
                 try:
                     display_no_combat_init(self.hero)
@@ -103,9 +104,11 @@ class DungeonDudes:
             else:
                 if random() < self.hero.health * .1:
                     print("[+] Successfully ran away!")
+                    input("Press any key to continue...")
                     return
                 else:
-                    print("[!] Bummer, you just loss two dice rolls for your next round.")
+                    print("[!] Bummer, you failed to run away. You loss two dice rolls on your next attack.")
+                    input("Press any key to continue...")
                     self.hero.dice_count -= 2
                     self._duels(environment)
 
@@ -160,6 +163,7 @@ class DungeonDudes:
 
     def _show_bag(self, exiting: bool = False):
         """Display the users bag"""
+        self.hero.cleanup_bag()
         if self.hero.has_loot:
             junk = [loot for loot in self.hero.loot if not isinstance(loot, ConsumableLoot)]
             consumable = [loot for loot in self.hero.loot if isinstance(loot, ConsumableLoot)]
